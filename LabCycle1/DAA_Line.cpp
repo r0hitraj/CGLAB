@@ -1,51 +1,49 @@
-#include <graphics.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <conio.h>
-#include <iostream.h>
+#include<GL/glut.h>
+#include <iostream>
+#include<cmath>
 using namespace std;
-int main(void) {
-  /* request auto detection */
-  int gdriver = DETECT, gmode, errorcode;
- 
-  /* initialize graphics and local variables */
-  initgraph( & gdriver, & gmode, "C:\\tc\\bgi");
- 
-  cout << "\n Enter X1,Y1,X2,Y2";
-  int x1, y1, x2, y2;
-  cin >> x1 >> y1 >> x2 >> y2;
- 
-  int dx = x2 - x1;
-  int dy = y2 - y1;
-  int length;
-  if (dx >= dy)
-    length = dx;
-  else
-    length = dy;
-  dx = dx / length;
-  dy = dy / length;
-  int sx;
-  if (dx >= 0)
-    sx = 1;
-  else
-    sx = -1;
-  int sy;
-  if (dy >= 0)
-    sy = 1;
-  else
-    sy = -1;
-  float x = x1 + 0.5 * (sx);
-  float y = y1 + 0.5 * (sy);
-  int i = 0;
-  while (i <= length) {
-    putpixel(int(x), int(y), 15);
-    x = x + dx;
-    y = y + dy;
-    i = i + 1;
-  }
- 
-  /* clean up */
-  getch();
-  closegraph();
-  return 0;
+
+void line() {
+    glColor3f(0,0,0);
+    glPointSize(2.0);
+    int x1, y1, x2, y2;
+    cout << "Enter starting point (x, y): ";
+    cin >> x1 >> y1;
+    cout << "Enter end point (x, y): ";
+    cin >> x2 >> y2;
+    int steps, dx = x2 - x1, dy = y2 - y1;
+    if (abs(dx) > abs(dy)) {
+        steps = abs(dx);
+    }
+    else {
+        steps = abs(dy);
+    }
+    float xInc = (float)dx / (float)steps;
+    float yInc = (float)dy / (float)steps;
+    float x = x1, y = y1;
+    glBegin(GL_POINTS);
+    for (int i = 0; i < steps; i++) {
+        glVertex2i(round(x), round(y));
+        x += xInc;
+        y += yInc;
+    }
+    glEnd();
+    glFlush();
+}
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(1000, 1000);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Line Draw OpenGL");
+
+    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    gluOrtho2D(0, 500, 0, 500);
+    glMatrixMode(GL_PROJECTION);
+    glViewport(0, 0, 500, 500);
+
+    glutDisplayFunc(line);
+    glutMainLoop();
+    return 0;
 }
