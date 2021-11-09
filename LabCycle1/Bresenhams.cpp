@@ -73,7 +73,6 @@ int main(int argC, char* argV[])
 	glutInitWindowSize(1000, 1000);
 	glutCreateWindow("Bresenham's Line Drawing Algorithm");
 	MyInit();
-	glClearColor(1.0f, 0.0f, 0.0f);
 	glutDisplayFunc(Draw);
 	glutMainLoop();
 	return 0;
