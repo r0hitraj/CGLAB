@@ -15,7 +15,7 @@ void myInit(void)
     gluOrtho2D(-1000, 1000, -500, 500);
 }
 
-void display(void)a
+void display(void)
 {
     // Outer loop to make figure moving
     // loop variable j iterated up to 10000,
